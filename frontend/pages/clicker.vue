@@ -5,11 +5,13 @@
         current clicker upgrade: {{displayVar(clicker)}}
         <button @click="calcVarIncr(clicker,count)">Click me!</button>
         <button @click="upgrade([{value:200,identifier:''}])">Click me to upgrade!</button>
+        <TinyUpgrade helloWorld="Hi"/>
     </div>
 </template>
 <script setup lang='ts'>
     import {ref, reactive, computed} from 'vue'
     import {type BigNumberVal} from '../types/index'
+    import TinyUpgrade from '../components/TinyUpgrade.vue';
     const count = reactive([
         {
             value:0, 
