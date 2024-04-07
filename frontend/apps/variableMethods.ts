@@ -41,6 +41,29 @@ export function calcVarIncr(vari: BigNumberVar, amounts: Array<BigNumberVar>){
         return temp;
     }
 }
+export function calcVarDecr(vari:BigNumberVar,amount:BigNumberVar){
+    let temp: BigNumberVar = vari
+    for(let i=0;i<amount.length;i++){
+        if(amount[i].value>temp[i].value){
+            let k=i+1
+            while(temp.length>=k+1 && temp[k].value==0){
+                k++
+            }
+            if(temp.length<=k+1){
+                return "Minus value"
+            }
+            temp[k].value-=1
+            for(let j = k-1;j>i;j--){
+                temp[j].value=999
+            }
+            temp[i].value=(temp[i].value*10+10000-amount[i].value*10)/10
+        }
+        else{
+            temp[i].value=(temp[i].value*10-amount[i].value*10)/10
+        }
+    }
+    return temp;
+}
 export function calcVarMult(vari: BigNumberVar, amount: BigNumberVar){
     let temp: BigNumberVar = [{
         value: 0,
@@ -80,9 +103,24 @@ export function calcVarMult(vari: BigNumberVar, amount: BigNumberVar){
                     }
                     temp3[tempNum-1].value -= Math.floor(temp3[tempNum-1].value/1000)*1000
                 }
-                temp = calcVarIncr(temp,[temp3])
+                temp = calcVarIncr(temp,[temp3])!
             }
         }
+    }
+    return temp;
+}
+export function calcVarMultMultiple(vari:BigNumberVar, amounts: Array<BigNumberVar>){
+    let temp: BigNumberVar = vari;
+    for(let i=0;i<amounts.length;i++){
+        temp = calcVarMult(temp,amounts[i])
+    }
+    return temp
+}
+export function calcVarPow(vari: BigNumberVar, amount: number){
+    let temp: BigNumberVar = vari
+    let tempBase:BigNumberVar = vari
+    for(let i=0;i<amount;i++){
+        temp = calcVarMult(temp,tempBase)
     }
     return temp;
 }
@@ -96,6 +134,11 @@ export function checkWhichBigger(firstNum: BigNumberVar, secondNum: BigNumberVar
         }
     }
     return 0
+}
+export function roundVarUp(vari: BigNumberVar){
+    let temp: BigNumberVar = vari
+    temp[0].value = Math.round(temp[0].value+0.5)
+    return temp
 }
 export function displayVar(vari: BigNumberVar){
     let temp = ""

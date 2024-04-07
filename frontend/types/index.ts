@@ -38,3 +38,14 @@ export type ThousandFingersUpgrade = {
     text: string
     subtext: string
 }
+export type building = {
+    id: number
+    base_price: BigNumberVar
+    src: string
+    name: string
+    additional_value: BigNumberVar
+    amount_bought: number
+}
+export type reactiveCount = {
+    count: BigNumberVar
+}

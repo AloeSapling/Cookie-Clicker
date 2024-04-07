@@ -7,7 +7,7 @@ let id=0
         value: 0,
         identifier: identifiers[0]
     }]
-    export const reg_upgrades: Ref<Array<RegUpgrade | ThousandFingers | ThousandFingersUpgrade>> = ref([
+    export const upgrades: Array<RegUpgrade | ThousandFingers | ThousandFingersUpgrade> =[
         {
             id:id++,
             icon: "src", 
@@ -103,4 +103,4 @@ let id=0
                 [{value: 20, identifier: identifiers[0]}], 
             text:"Multiplies the gain from Thousand fingers by 20.",
             subtext:'"clickityclickityclickityclickity"'}
-    ])
+    ]
