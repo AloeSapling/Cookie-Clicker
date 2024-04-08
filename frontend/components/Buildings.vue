@@ -1,6 +1,6 @@
 <template>
     <div v-for="building in buildings">
-        <button class="p-3 border-black border-[1px]" @click="purchase(building.id,1,next_prices[building.id].pricex1)">
+        <button class="p-3 border-black border-[1px]" :class="buyableClass(cookieCount,next_prices[building.id].pricex1)" @click="purchase(building.id,1,next_prices[building.id].pricex1)">
             <p>{{ building.name }}</p>
             <p>{{ displayVar(next_prices[building.id].pricex1) }}</p>
         </button>
@@ -10,12 +10,13 @@
     import { ref, computed } from 'vue';
     import {calcVarMult, calcVarPow, identifiers, calcVarIncr, displayVar, roundVarUp, checkWhichBigger }from '../apps/variableMethods'
     import {buildingsBase} from'../apps/baseValues'
-import type { BigNumberVar } from '~/types';
+    import type { BigNumberVar } from '~/types';
+    import { buildings } from '~/apps/buildings';
     const props = defineProps<{
         cookieCount: BigNumberVar
     }>()
     function buyableClass(num1: BigNumberVar, num2: BigNumberVar){
-        if(checkWhichBigger(num1,num2)){return 'bg-green-200'}
+        if(checkWhichBigger(num1,num2)==1){return 'bg-green-200'}
         else return 'bg-red-200'
     }
     const emit = defineEmits(['response'])
@@ -23,7 +24,8 @@ import type { BigNumberVar } from '~/types';
         if(checkWhichBigger(props.cookieCount,price)!=-1){
             console.log(price)
             buildings[id].amount_bought+=amount_bought
-            emit("response",[id, price, buildings[id].additional_value])
+            if(buildings[id].amount_bought==1){emit("response",[id, buildings[id].base_price, buildings[id].additional_value])}
+            else emit("response",[id, price, buildings[id].additional_value])
         }
     }
     function calcNext(price: BigNumberVar,amount_bought:number, amount: number){
@@ -37,7 +39,6 @@ import type { BigNumberVar } from '~/types';
                 }
                 return res;
     }
-    const buildings = reactive(buildingsBase)
     const next_prices = computed(() => {
         return buildings.map((x) => ({
             id: x.id,
@@ -46,7 +47,6 @@ import type { BigNumberVar } from '~/types';
             pricex100: calcNext(x.base_price,x.amount_bought,100)
         }));
     });
-    console.log(buildings, next_prices.value);
 </script>
 <style>
     

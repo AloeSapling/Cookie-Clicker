@@ -80,30 +80,19 @@ export function calcVarMult(vari: BigNumberVar, amount: BigNumberVar){
                     temp.push({value: temp2,identifier: identifiers[i+j]})
                 }
             }else{
-                let temp3: BigNumberVar = []
-                for(let t =0;t<i+j;t++){
-                    temp3.push({
-                        value: 0,
-                        identifier: identifiers[t]
-                    })
-                }
-                temp3.push({
-                    value: temp2,
-                    identifier: identifiers[temp3.length]
-                })
-                let tempNum: number = temp3.length-1
-                while(temp3[tempNum].value>1000){
-                    if(temp3.length<=tempNum+1){
-                        temp3.push({
-                            value: Math.floor(temp3[tempNum].value/1000),
+                temp[j].value = temp2!
+                let tempNum: number = j
+                while(temp[tempNum].value>1000){
+                    if(temp.length<=tempNum+1){
+                        temp.push({
+                            value: Math.floor(temp[tempNum].value/1000),
                             identifier: identifiers[++tempNum]
                         })
                     }else{
-                        temp3[++tempNum].value+=Math.floor(temp3[tempNum-1].value/1000)
+                        temp[++tempNum].value+=Math.floor(temp[tempNum-1].value/1000)
                     }
-                    temp3[tempNum-1].value -= Math.floor(temp3[tempNum-1].value/1000)*1000
+                    temp[tempNum-1].value -= Math.floor(temp[tempNum-1].value/1000)*1000
                 }
-                temp = calcVarIncr(temp,[temp3])!
             }
         }
     }
@@ -119,8 +108,11 @@ export function calcVarMultMultiple(vari:BigNumberVar, amounts: Array<BigNumberV
 export function calcVarPow(vari: BigNumberVar, amount: number){
     let temp: BigNumberVar = vari
     let tempBase:BigNumberVar = vari
-    for(let i=0;i<amount;i++){
+    for(let i=0;i<amount-1;i++){
         temp = calcVarMult(temp,tempBase)
+    }
+    if(amount==0){
+        return[{value:1,identifier:identifiers[0]}]
     }
     return temp;
 }
@@ -137,7 +129,7 @@ export function checkWhichBigger(firstNum: BigNumberVar, secondNum: BigNumberVar
 }
 export function roundVarUp(vari: BigNumberVar){
     let temp: BigNumberVar = vari
-    temp[0].value = Math.round(temp[0].value+0.5)
+    temp[0].value = Math.round(temp[0].value+0.49)
     return temp
 }
 export function displayVar(vari: BigNumberVar){
@@ -145,7 +137,7 @@ export function displayVar(vari: BigNumberVar){
     if(vari.length>1){
         temp = vari[vari.length-1].value.toString()
         temp+="."
-        temp+=Math.floor(vari[vari.length-2].value/100).toString()
+        temp+=Math.floor(vari[vari.length-2].value).toString()
     }else{
         temp = vari[0].value.toString()
     }

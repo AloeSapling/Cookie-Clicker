@@ -49,3 +49,8 @@ export type building = {
 export type reactiveCount = {
     count: BigNumberVar
 }
+export type activElem ={
+    id:number
+    count:BigNumberVar
+}
+export type activeReactiveCount = Array<activElem>
