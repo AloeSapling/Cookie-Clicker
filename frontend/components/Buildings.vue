@@ -8,7 +8,7 @@
 </template>
 <script setup lang="ts">
     import { ref, computed } from 'vue';
-    import {calcVarMult, calcVarPow, identifiers, calcVarIncr, displayVar, roundVarUp, checkWhichBigger }from '../apps/variableMethods'
+    import {calcVarMult, calcVarPow, identifiers, calcVarIncr, displayVar, roundVarUp, checkWhichBigger, tempCalcVarMult,tempCheckWhichBigger }from '../apps/variableMethods'
     import {buildingsBase} from'../apps/baseValues'
     import type { BigNumberVar } from '~/types';
     import { buildings } from '~/apps/buildings';
@@ -16,13 +16,13 @@
         cookieCount: BigNumberVar
     }>()
     function buyableClass(num1: BigNumberVar, num2: BigNumberVar){
-        if(checkWhichBigger(num1,num2)==1){return 'bg-green-200'}
+        if(checkWhichBigger(num1,num2)!=-1){return 'bg-green-200'}
         else return 'bg-red-200'
     }
     const emit = defineEmits(['response'])
     function purchase(id:number,amount_bought:number, price: BigNumberVar){
         if(checkWhichBigger(props.cookieCount,price)!=-1){
-            console.log(price)
+            console.log("additional value start",buildings[id].additional_value)
             buildings[id].amount_bought+=amount_bought
             if(buildings[id].amount_bought==1){emit("response",[id, buildings[id].base_price, buildings[id].additional_value])}
             else emit("response",[id, price, buildings[id].additional_value])

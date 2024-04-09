@@ -1,6 +1,6 @@
 <template lang="">
     <div v-for="upgrade in displayUpgrades" @hover="displayUpgrades=fullList">
-        <TinyUpgrade @response="emit('response',[upgrade.id,upgrade.things_affected,upgrade.price])" :cookieCount="cookieCount" :price="upgrade.price" :name="upgrade.name"/>
+        <TinyUpgrade @response="emit('response',[upgrade.id,upgrade.things_affected,upgrade.multiplier,upgrade.price])" :cookieCount="cookieCount" :price="upgrade.price" :name="upgrade.name"/>
     </div>
 </template>
 <script setup lang="ts">

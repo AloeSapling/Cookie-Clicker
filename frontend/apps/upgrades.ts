@@ -58,7 +58,7 @@ export const upgrades: Array<RegUpgrade | ThousandFingers | ThousandFingersUpgra
             [{value: 0, identifier: identifiers[0]},
             {value:100,identifier:identifiers[1]}], 
         things_affected: [0,-1], 
-        additor: 
+        multiplier: 
             [{value: 0.1, identifier: identifiers[0]}], 
         text: "The mouse and cursors gain +0.1 cookies for each non-cursor object owned.", 
         subtext: '"clickity"'},

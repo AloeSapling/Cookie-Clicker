@@ -52,5 +52,6 @@ export type reactiveCount = {
 export type activElem ={
     id:number
     count:BigNumberVar
+    multiplier: BigNumberVar
 }
 export type activeReactiveCount = Array<activElem>

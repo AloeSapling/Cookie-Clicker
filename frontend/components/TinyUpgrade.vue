@@ -1,11 +1,14 @@
 <template lang="">
     <div>
-        <button :class="buyableClass(props.cookieCount,props.price),display" @click="upgrade()">props.name</button>
+        <button :class="[buyableClass(props.cookieCount,props.price),display]" class="flex-col items-center justify-center" @click="upgrade()">
+            <p>{{props.name}}</p>
+            <p>{{displayVar(props.price)}}</p>
+        </button>
     </div>
 </template>
 <script setup lang="ts">
 import {type BigNumberVar } from '~/types';
-import { checkWhichBigger } from '~/apps/variableMethods';
+import { checkWhichBigger,displayVar } from '~/apps/variableMethods';
     const props = defineProps<{
         name: string
         price: BigNumberVar
