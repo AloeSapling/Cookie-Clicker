@@ -13,7 +13,7 @@ export function calcVarIncr(vari: BigNumberVar, amounts: Array<BigNumberVar>){
                     identifier: identifiers[i]
                 })
             }else{
-                temp[i].value = (temp[i].value + amounts[j][i].value)
+                temp[i].value = (temp[i].value*maxDecimal + amounts[j][i].value*maxDecimal)/maxDecimal
                 temp[i].value = (Math.floor(temp[i].value*maxDecimal))/maxDecimal
                 if(temp[i].value>=1000){
                     if(temp.length<=i+1){
@@ -51,7 +51,7 @@ export function calcVarDecr(vari:BigNumberVar,amount:BigNumberVar){
             while(temp.length>=k+1 && temp[k].value==0){
                 k++
             }
-            if(temp.length<=k+1){
+            if(temp.length<k+1){
                 return "Minus value"
             }
             temp[k].value-=1

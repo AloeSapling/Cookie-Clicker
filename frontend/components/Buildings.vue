@@ -3,6 +3,7 @@
         <button class="p-3 border-black border-[1px]" :class="buyableClass(cookieCount,next_prices[building.id].pricex1)" @click="purchase(building.id,1,next_prices[building.id].pricex1)">
             <p>{{ building.name }}</p>
             <p>{{ displayVar(next_prices[building.id].pricex1) }}</p>
+            <p>{{building.amount_bought}}</p>
         </button>
     </div>
 </template>
@@ -22,7 +23,6 @@
     const emit = defineEmits(['response'])
     function purchase(id:number,amount_bought:number, price: BigNumberVar){
         if(checkWhichBigger(props.cookieCount,price)!=-1){
-            console.log("additional value start",buildings[id].additional_value)
             buildings[id].amount_bought+=amount_bought
             if(buildings[id].amount_bought==1){emit("response",[id, buildings[id].base_price, buildings[id].additional_value])}
             else emit("response",[id, price, buildings[id].additional_value])

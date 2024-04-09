@@ -1,6 +1,8 @@
 <template lang="">
-    <div v-for="upgrade in displayUpgrades" @hover="displayUpgrades=fullList">
-        <TinyUpgrade @response="emit('response',[upgrade.id,upgrade.things_affected,upgrade.multiplier,upgrade.price])" :cookieCount="cookieCount" :price="upgrade.price" :name="upgrade.name"/>
+    <div @mouseover="hover()" @mouseleave="dehover()">
+        <div v-for="upgrade in displayUpgrades.list">
+            <TinyUpgrade @response="emit('response',[upgrade.id,upgrade.things_affected,upgrade.multiplier,upgrade.price])" :cookieCount="cookieCount" :price="upgrade.price" :name="upgrade.name"/>
+        </div>
     </div>
 </template>
 <script setup lang="ts">
@@ -18,13 +20,22 @@ import type { BigNumberVar } from '~/types';
         value: 0,
         identifier: identifiers[0]
     }]
+    const upgrades_local = upgrades
     const fullList = computed(()=>{
-        return upgrades.filter((x)=>buildings[x.thing_needed_id].amount_bought>=x.amount_needed)
+        return upgrades_local.filter((x)=>buildings[x.thing_needed_id].amount_bought>=x.amount_needed)
     })
     const filteredList = computed(()=>{
         return fullList.value.slice(0,5)
     })
-    const displayUpgrades = ref(filteredList)
+    let displayUpgrades: {list:any} = reactive({
+        list: filteredList
+    })
+    function hover(){
+        displayUpgrades.list = fullList
+    }
+    function dehover(){
+        displayUpgrades.list = filteredList
+    }
 </script>
 <style lang="">
     

@@ -23,13 +23,10 @@
         else cookies.count = temp!
         let index: number = activeCount.findIndex((x)=>x.id==id)
         if(index!=-1){
-            console.log(activeCount[index].count)
-            activeCount[index].count = calcVarIncr(activeCount[index].count,[additional_value])!
-            console.log(activeCount[index].count)
+            activeCount[index].count = calcVarIncr(activeCount[index].count,[additional_value])!        
         }else{
             activeCount.push({id:id,count:calcVarMult(additional_value,[{value:1,identifier:identifiers[0]}]),multiplier:[{ value: 1, identifier: identifiers[0] }]})
         }
-        console.log("additional_value end",additional_value)
         
     }
     function upgrade(id:number,things_affected:Array<number>,value:BigNumberVar,price:BigNumberVar){
@@ -63,7 +60,7 @@
         return sum
     })
     const clicker: reactiveCount = reactive({
-        count:[{value:700, identifier:identifiers[0]}]})
+        count:[{value:700, identifier:identifiers[0]},{value:700, identifier:identifiers[1]}]})
     async function activeIncrement(){
         for(let i=0;i<5;i++){
             if(activeCount.length>0){
