@@ -45,6 +45,7 @@ export type building = {
     name: string
     additional_value: BigNumberVar
     amount_bought: number
+    pos: number
 }
 export type reactiveCount = {
     count: BigNumberVar
